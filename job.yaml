@@ -1,0 +1,20 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: liquibase-job
+spec:
+  template:
+    spec:
+      containers:
+      - name: liquibase-job
+        image: liquibase:v1
+        command: [
+          "liquibase",
+          "update",
+          "--changeLogFile=changelog.xml",
+          "--url=jdbc:postgresql://host.docker.internal:32768/liquibase",
+          "--username=postgres",
+          "--password=postgres"
+        ]
+      restartPolicy: Never
+  backoffLimit: 3
