@@ -4,5 +4,12 @@
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
   http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.3.xsd">
-    <include file="log/2023-01-01.xml" />
+    <changeSet id="3" author="Liquibase">
+      <createTable tableName="test_table3">
+        <column name="test_id" type="int">
+          <constraints primaryKey="true"/>
+        </column>
+        <column name="test_column" type="varchar"/>
+      </createTable>
+    </changeSet>
 </databaseChangeLog>

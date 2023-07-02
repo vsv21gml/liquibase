@@ -1,0 +1,9 @@
+databaseChangeLog:
+- include:
+    file: log/2023-01-01.sql
+- include:
+    file: log/2023-01-02.sql
+- include:
+    file: log/2023-01-03.sql
+- include:
+    file: log/2023-01-04.sql

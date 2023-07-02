@@ -2,6 +2,8 @@ apiVersion: batch/v1
 kind: Job
 metadata:
   name: liquibase-job
+  annotations:
+    "helm.sh/hook": pre-install,pre-upgrade
 spec:
   template:
     spec:
@@ -11,10 +13,10 @@ spec:
         command: [
           "liquibase",
           "update",
-          "--changeLogFile=changelog.xml",
+          "--changeLogFile=changelog.yaml",
           "--url=jdbc:postgresql://host.docker.internal:32768/liquibase",
           "--username=postgres",
           "--password=postgres"
         ]
       restartPolicy: Never
-  backoffLimit: 3
+  backoffLimit: 0

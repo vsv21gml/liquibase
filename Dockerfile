@@ -1,3 +1,3 @@
 FROM liquibase/liquibase:latest
-COPY changelog.xml .
+COPY changelog.yaml .
 COPY log ./log
