@@ -1,0 +1,6 @@
+db:
+  host: host.docker.internal
+  port: 32768
+  dbName: tenant5
+  user: postgres
+  pass: postgres

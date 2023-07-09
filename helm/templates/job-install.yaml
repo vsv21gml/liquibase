@@ -1,0 +1,36 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: liquibase-job-install
+  annotations:
+    "helm.sh/hook": pre-install
+spec:
+  template:
+    spec:
+      initContainers:
+      - name: create-db-job
+        image: psql:v1
+        env:
+        - name: PGHOST
+          value: {{ .Values.db.host | quote }}
+        - name: PGPORT
+          value: {{ .Values.db.port | quote }}
+        - name: PGUSER
+          value: {{ .Values.db.user | quote }}
+        - name: PGPASSWORD
+          value: {{ .Values.db.pass | quote }}
+        - name: NEW_DATABASE
+          value: {{ .Values.db.dbName | quote }}
+      containers:
+      - name: liquibase-job-install
+        image: liquibase:v1
+        command: [
+          "liquibase",
+          "update",
+          "--changeLogFile=changelog.yaml",
+          "--url=jdbc:postgresql://{{ .Values.db.host }}:{{ .Values.db.port }}/{{ .Values.db.dbName }}",
+          "--username={{ .Values.db.user }}",
+          "--password={{ .Values.db.pass }}"
+        ]
+      restartPolicy: Never
+  backoffLimit: 5

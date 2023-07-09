@@ -1,0 +1,22 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: liquibase-job-upgrade
+  annotations:
+    "helm.sh/hook": pre-upgrade
+spec:
+  template:
+    spec:
+      containers:
+      - name: liquibase-job-upgrade
+        image: liquibase:v1
+        command: [
+          "liquibase",
+          "update",
+          "--changeLogFile=changelog.yaml",
+          "--url=jdbc:postgresql://{{ .Values.db.host }}:{{ .Values.db.port }}/{{ .Values.db.dbName }}",
+          "--username={{ .Values.db.user }}",
+          "--password={{ .Values.db.pass }}"
+        ]
+      restartPolicy: Never
+  backoffLimit: 0
