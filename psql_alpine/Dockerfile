@@ -1,4 +1,4 @@
-FROM alpinelinux/docker-cli:latest
+FROM alpine:3.18.2
 
 ENV PGHOST host.docker.internal
 ENV PGPORT 32768
